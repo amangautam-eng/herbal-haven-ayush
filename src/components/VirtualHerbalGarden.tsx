@@ -6,6 +6,7 @@ import { InteractiveGarden } from "./garden/InteractiveGarden";
 import { PlantModal } from "./garden/PlantModal";
 import { AyushSystems } from "./garden/AyushSystems";
 import { SearchSection } from "./garden/SearchSection";
+import { PractitionersSection } from "./garden/PractitionersSection";
 import { Footer } from "./garden/Footer";
 
 const VirtualHerbalGarden = () => {
@@ -57,6 +58,8 @@ const VirtualHerbalGarden = () => {
           filteredPlants={filteredPlants}
           onPlantClick={setSelectedPlant}
         />
+        
+        <PractitionersSection />
       </main>
 
       <Footer />

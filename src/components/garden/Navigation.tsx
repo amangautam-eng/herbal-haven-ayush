@@ -25,6 +25,7 @@ export const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
     { id: "garden", label: "Explore Garden" },
     { id: "systems", label: "AYUSH Systems" },
     { id: "search", label: "Search" },
+    { id: "practitioners", label: "Find Practitioners" },
   ];
 
   return (
