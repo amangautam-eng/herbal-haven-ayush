@@ -57,7 +57,7 @@ export const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
                 className={`font-medium transition-colors hover:text-primary ${
                   currentSection === item.id
                     ? "text-primary border-b-2 border-primary"
-                    : "text-muted-foreground"
+                    : "text-foreground hover:text-primary"
                 }`}
               >
                 {item.label}
@@ -90,7 +90,7 @@ export const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
                   className={`text-left font-medium transition-colors hover:text-primary ${
                     currentSection === item.id
                       ? "text-primary"
-                      : "text-muted-foreground"
+                      : "text-foreground hover:text-primary"
                   }`}
                 >
                   {item.label}
