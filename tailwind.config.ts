@@ -47,6 +47,19 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Custom herbal garden colors
+        forest: {
+          deep: "hsl(var(--forest-deep))",
+          light: "hsl(var(--forest-light))",
+        },
+        earth: {
+          warm: "hsl(var(--earth-warm))",
+          light: "hsl(var(--earth-light))",
+        },
+        sage: "hsl(var(--sage))",
+        moss: "hsl(var(--moss))",
+        golden: "hsl(var(--golden))",
+        cream: "hsl(var(--cream))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -57,6 +70,19 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      backgroundImage: {
+        "gradient-nature": "var(--gradient-nature)",
+        "gradient-earth": "var(--gradient-earth)",
+        "gradient-subtle": "var(--gradient-subtle)",
+      },
+      boxShadow: {
+        "natural": "var(--shadow-natural)",
+        "glow": "var(--shadow-glow)",
+      },
+      fontFamily: {
+        'display': ['Playfair Display', 'serif'],
+        'body': ['Inter', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,10 +106,25 @@ export default {
             height: "0",
           },
         },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        "pulse-glow": {
+          "0%, 100%": { boxShadow: "0 0 15px hsl(var(--golden) / 0.4)" },
+          "50%": { boxShadow: "0 0 25px hsl(var(--golden) / 0.7)" },
+        },
+        "grow": {
+          "0%": { transform: "scale(1)" },
+          "100%": { transform: "scale(1.05)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "float": "float 3s ease-in-out infinite",
+        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        "grow": "grow 0.3s ease-out forwards",
       },
     },
   },
