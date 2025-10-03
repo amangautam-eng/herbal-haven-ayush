@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Leaf, Menu, X } from "lucide-react";
+import { Leaf, Menu, X, User, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { User as SupabaseUser } from "@supabase/supabase-js";
 
 interface NavigationProps {
   currentSection: string;
@@ -10,6 +14,9 @@ interface NavigationProps {
 export const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,6 +26,37 @@ export const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    // Check current session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      toast({
+        title: "Logged out",
+        description: "You have been successfully logged out.",
+      });
+      navigate("/");
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
 
   const navItems = [
     { id: "home", label: "Home" },
@@ -63,6 +101,21 @@ export const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
                 {item.label}
               </button>
             ))}
+            <div className="flex items-center gap-2 ml-4">
+              {user ? (
+                <Button onClick={handleLogout} variant="ghost" size="sm">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </Button>
+              ) : (
+                <Link to="/auth">
+                  <Button variant="default" size="sm">
+                    <User className="mr-2 h-4 w-4" />
+                    Login
+                  </Button>
+                </Link>
+              )}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -96,6 +149,21 @@ export const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
                   {item.label}
                 </button>
               ))}
+              <div className="pt-4 border-t border-border">
+                {user ? (
+                  <Button onClick={handleLogout} variant="ghost" className="w-full justify-start">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Logout
+                  </Button>
+                ) : (
+                  <Link to="/auth" className="block">
+                    <Button variant="default" className="w-full justify-start">
+                      <User className="mr-2 h-4 w-4" />
+                      Login
+                    </Button>
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         )}
